@@ -1,0 +1,32 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: node:16
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Build and package
+          caches:
+            - node
+          script:
+            - apt-get update && apt-get install -y zip
+            - npm install
+            - npm run build
+            - zip -r application.zip  node_modules/* && cd dist && zip ../application.zip index.js handlers/* buffer.js MenuReader.js MenuCrawler.js models/*
+          artifacts:
+            - application.zip
+      - step:
+          name: Deploy to Lambda
+          script:
+          - pipe: atlassian/aws-lambda-deploy:1.5.0
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              FUNCTION_NAME: 'MenuPreparer'
+              COMMAND: 'update'
+              ZIP_FILE: 'application.zip'

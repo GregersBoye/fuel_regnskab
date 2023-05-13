@@ -1,0 +1,27 @@
+[
+  {
+    "file": "peugeot_307.csv",
+    "car": "Peugeot 307",
+    "start": {
+      "year": 2015,
+      "month": 3
+    }
+  },
+  {
+    "car": "Hyundai I30",
+    "file": "hyundai_i30.csv",
+    "start": {
+      "year": 2017,
+      "month": 10
+    }
+  },
+
+  {
+    "car": "Peugeot 5008",
+    "file": "peugeot_5008.csv",
+    "start": {
+      "year": 2022,
+      "month": 2
+    }
+  }
+]
